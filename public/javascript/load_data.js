@@ -53,7 +53,7 @@ let cargarFechaActual = () => {
 let cargarOpenMeteo = () => {
 
     //URL que responde con la respuesta a cargar
-    let URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&hourly=temperature_2m,precipitation_probability&timezone=auto';
+    let URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&hourly=temperature_2m,precipitation_probability&daily=uv_index_max&timezone=auto';
 
     fetch(URL)
         .then(responseText => responseText.json())
@@ -61,7 +61,7 @@ let cargarOpenMeteo = () => {
 
             //Respuesta en formato JSON
             let plotRef = document.getElementById('plot1');
-            let plotRef2 = document.getElementById('plot2')
+            let plotRef2 = document.getElementById('plot2');
 
             //Etiquetas del gráfico
             let labels = responseJSON.hourly.time;
@@ -69,6 +69,7 @@ let cargarOpenMeteo = () => {
             //Etiquetas de los datos
             let data = responseJSON.hourly.temperature_2m;
             let data2 = responseJSON.hourly.precipitation_probability;
+            let data3 = responseJSON.daily.uv_index_max;
 
             //Objeto de configuración del gráfico
             let config = {
@@ -79,6 +80,10 @@ let cargarOpenMeteo = () => {
                         {
                             label: 'Temperature [2m]',
                             data: data,
+                        },
+                        {
+                            label: 'UV Index',
+                            data: data3,
                         }
                     ]
                 }
