@@ -124,11 +124,27 @@ let parseXML = (responseText) => {
   console.log(xml);
 };
 
-//Callback
-let selectListener = (event) => {
-  let selectedCity = event.target.value;
-  console.log(selectedCity);
-};
+// Callback async
+let selectListener = async (event) => {
+
+    let selectedCity = event.target.value
+
+    try {
+
+        //API key
+        let APIkey = '30e57d2739b39646ff3140fb778a011d'
+        let url = `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&mode=xml&appid=${APIkey}`
+
+        let response = await fetch(url)
+        let responseText = await response.text()
+        
+        await parseXML(responseText)
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 
 let loadForecastByCity = () => {
   //Handling event
